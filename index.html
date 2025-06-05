@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hiragana Chart - 平仮名表</title>
+  <style>
+    body {
+      font-family: "Yu Mincho", "MS Mincho", serif;
+      background: #f5f5f0 url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="50" fill="%23f0ebe0" opacity="0.3"/><rect x="50" y="50" width="50" height="50" fill="%23f0ebe0" opacity="0.3"/></svg>');
+      color: #333;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: rgba(255,253,250,0.7);
+      border: 1px solid #e6e2d3;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 30px;
+      border-radius: 8px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      color: #8E354A;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      font-weight: normal;
+      border-bottom: 2px solid #8E354A;
+      padding-bottom: 10px;
+      position: relative;
+    }
+
+    h1::before, h1::after {
+      content: "❀";
+      color: #D0104C;
+      position: absolute;
+      font-size: 0.6em;
+      top: 12px;
+    }
+
+    h1::before {
+      left: 20%;
+    }
+
+    h1::after {
+      right: 20%;
+    }
+
+    .jp-title {
+      display: block;
+      font-size: 0.7em;
+      margin-top: 5px;
+      color: #595959;
+    }
+
+    .section {
+      font-size: 1.2em;
+      background: #f3f3ea;
+      border-left: 8px solid #BF6766;
+      padding: 10px 20px;
+      margin: 40px 0 20px;
+      font-weight: bold;
+      color: #413543;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .section::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60px;
+      height: 100%;
+      background: linear-gradient(to right, transparent, #f3f3ea);
+    }
+
+    table {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 30px;
+      border-collapse: separate;
+      border-spacing: 2px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      border: 1px solid #d7d0c0;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 1.1em;
+    }
+
+    th {
+      background: #594545;
+      color: #fff;
+      font-weight: normal;
+      letter-spacing: 1px;
+    }
+
+    td {
+      background: #fffbf2;
+      transition: all 0.3s;
+      font-family: "Yu Mincho", "MS Mincho", serif;
+    }
+
+    td:hover {
+      background: #FFF1CF;
+      transform: scale(1.02);
+      box-shadow: 0 0 8px rgba(191, 103, 102, 0.3);
+      z-index: 1;
+      position: relative;
+    }
+
+    .hiragana {
+      font-size: 1.8em;
+      display: block;
+      margin-bottom: 3px;
+      color: #000000;
+    }
+
+    .romaji {
+      font-size: 0.8em;
+      color: #595959;
+    }
+
+    .empty-cell {
+      background: #f8f6f1;
+    }
+
+    small {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #666;
+      border-top: 1px dashed #d7d0c0;
+      padding-top: 15px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    .stamp {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      width: 80px;
+      height: 80px;
+      background: rgba(201, 71, 71, 0.1);
+      border: 2px solid rgba(201, 71, 71, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(15deg);
+      color: #8E354A;
+      font-size: 0.8em;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .hiragana {
+        font-size: 1.4em;
+      }
+      
+      th, td {
+        padding: 8px 4px;
+        font-size: 0.9em;
+      }
+      
+      h1::before, h1::after {
+        display: none;
+      }
+      
+      .stamp {
+        width: 60px;
+        height: 60px;
+        font-size: 0.7em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 10px;
+      }
+      
+      .container {
+        padding: 15px;
+      }
+      
+      table, th, td {
+        font-size: 0.8em;
+      }
+      
+      .hiragana {
+        font-size: 1.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="stamp">日本語<br>学習<br>必須</div>
+    <h1>
+      Hiragana Chart
+      <span class="jp-title">平仮名表 (ひらがなひょう)</span>
+    </h1>
+
+    <div class="section">Basic Hiragana (五十音 - Gojuon)</div>
+    <table>
+      <tr>
+        <th>A</th>
+        <th>I</th>
+        <th>U</th>
+        <th>E</th>
+        <th>O</th>
+      </tr>
+      <tr>
+        <td><span class="hiragana">あ</span><span class="romaji">a</span></td>
+        <td><span class="hiragana">い</span><span class="romaji">i</span></td>
+        <td><span class="hiragana">う</span><span class="romaji">u</span></td>
+        <td><span class="hiragana">え</span><span class="romaji">e</span></td>
+        <td><span class="hiragana">お</span><span class="romaji">o</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">か</span><span class="romaji">ka</span></td>
+        <td><span class="hiragana">き</span><span class="romaji">ki</span></td>
+        <td><span class="hiragana">く</span><span class="romaji">ku</span></td>
+        <td><span class="hiragana">け</span><span class="romaji">ke</span></td>
+        <td><span class="hiragana">こ</span><span class="romaji">ko</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">さ</span><span class="romaji">sa</span></td>
+        <td><span class="hiragana">し</span><span class="romaji">shi</span></td>
+        <td><span class="hiragana">す</span><span class="romaji">su</span></td>
+        <td><span class="hiragana">せ</span><span class="romaji">se</span></td>
+        <td><span class="hiragana">そ</span><span class="romaji">so</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">た</span><span class="romaji">ta</span></td>
+        <td><span class="hiragana">ち</span><span class="romaji">chi</span></td>
+        <td><span class="hiragana">つ</span><span class="romaji">tsu</span></td>
+        <td><span class="hiragana">て</span><span class="romaji">te</span></td>
+        <td><span class="hiragana">と</span><span class="romaji">to</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">な</span><span class="romaji">na</span></td>
+        <td><span class="hiragana">に</span><span class="romaji">ni</span></td>
+        <td><span class="hiragana">ぬ</span><span class="romaji">nu</span></td>
+        <td><span class="hiragana">ね</span><span class="romaji">ne</span></td>
+        <td><span class="hiragana">の</span><span class="romaji">no</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">は</span><span class="romaji">ha</span></td>
+        <td><span class="hiragana">ひ</span><span class="romaji">hi</span></td>
+        <td><span class="hiragana">ふ</span><span class="romaji">fu</span></td>
+        <td><span class="hiragana">へ</span><span class="romaji">he</span></td>
+        <td><span class="hiragana">ほ</span><span class="romaji">ho</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ま</span><span class="romaji">ma</span></td>
+        <td><span class="hiragana">み</span><span class="romaji">mi</span></td>
+        <td><span class="hiragana">む</span><span class="romaji">mu</span></td>
+        <td><span class="hiragana">め</span><span class="romaji">me</span></td>
+        <td><span class="hiragana">も</span><span class="romaji">mo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">や</span><span class="romaji">ya</span></td>
+        <td class="empty-cell"></td>
+        <td><span class="hiragana">ゆ</span><span class="romaji">yu</span></td>
+        <td class="empty-cell"></td>
+        <td><span class="hiragana">よ</span><span class="romaji">yo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ら</span><span class="romaji">ra</span></td>
+        <td><span class="hiragana">り</span><span class="romaji">ri</span></td>
+        <td><span class="hiragana">る</span><span class="romaji">ru</span></td>
+        <td><span class="hiragana">れ</span><span class="romaji">re</span></td>
+        <td><span class="hiragana">ろ</span><span class="romaji">ro</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">わ</span><span class="romaji">wa</span></td>
+        <td class="empty-cell"></td>
+        <td class="empty-cell"></td>
+        <td class="empty-cell"></td>
+        <td><span class="hiragana">を</span><span class="romaji">wo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ん</span><span class="romaji">n</span></td>
+        <td class="empty-cell" colspan="4"></td>
+      </tr>
+    </table>
+
+    <div class="section">Dakuten (濁点 - Voiced Sounds)</div>
+    <table>
+      <tr>
+        <th>K → G</th>
+        <th>S → Z</th>
+        <th>T → D</th>
+        <th>H → B</th>
+      </tr>
+      <tr>
+        <td><span class="hiragana">が</span><span class="romaji">ga</span></td>
+        <td><span class="hiragana">ざ</span><span class="romaji">za</span></td>
+        <td><span class="hiragana">だ</span><span class="romaji">da</span></td>
+        <td><span class="hiragana">ば</span><span class="romaji">ba</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ぎ</span><span class="romaji">gi</span></td>
+        <td><span class="hiragana">じ</span><span class="romaji">ji</span></td>
+        <td><span class="hiragana">ぢ</span><span class="romaji">ji*</span></td>
+        <td><span class="hiragana">び</span><span class="romaji">bi</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ぐ</span><span class="romaji">gu</span></td>
+        <td><span class="hiragana">ず</span><span class="romaji">zu</span></td>
+        <td><span class="hiragana">づ</span><span class="romaji">zu*</span></td>
+        <td><span class="hiragana">ぶ</span><span class="romaji">bu</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">げ</span><span class="romaji">ge</span></td>
+        <td><span class="hiragana">ぜ</span><span class="romaji">ze</span></td>
+        <td><span class="hiragana">で</span><span class="romaji">de</span></td>
+        <td><span class="hiragana">べ</span><span class="romaji">be</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ご</span><span class="romaji">go</span></td>
+        <td><span class="hiragana">ぞ</span><span class="romaji">zo</span></td>
+        <td><span class="hiragana">ど</span><span class="romaji">do</span></td>
+        <td><span class="hiragana">ぼ</span><span class="romaji">bo</span></td>
+      </tr>
+    </table>
+
+    <div class="section">Handakuten (半濁点 - P Sounds)</div>
+    <table>
+      <tr>
+        <th>H → P</th>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ぱ</span><span class="romaji">pa</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ぴ</span><span class="romaji">pi</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ぷ</span><span class="romaji">pu</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ぺ</span><span class="romaji">pe</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ぽ</span><span class="romaji">po</span></td>
+      </tr>
+    </table>
+
+    <div class="section">Yōon (拗音 - Contracted Sounds)</div>
+    <table>
+      <tr>
+        <th>Base</th>
+        <th>+ゃ (ya)</th>
+        <th>+ゅ (yu)</th>
+        <th>+ょ (yo)</th>
+      </tr>
+      <tr>
+        <td><span class="hiragana">き</span><span class="romaji">ki</span></td>
+        <td><span class="hiragana">きゃ</span><span class="romaji">kya</span></td>
+        <td><span class="hiragana">きゅ</span><span class="romaji">kyu</span></td>
+        <td><span class="hiragana">きょ</span><span class="romaji">kyo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ぎ</span><span class="romaji">gi</span></td>
+        <td><span class="hiragana">ぎゃ</span><span class="romaji">gya</span></td>
+        <td><span class="hiragana">ぎゅ</span><span class="romaji">gyu</span></td>
+        <td><span class="hiragana">ぎょ</span><span class="romaji">gyo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">し</span><span class="romaji">shi</span></td>
+        <td><span class="hiragana">しゃ</span><span class="romaji">sha</span></td>
+        <td><span class="hiragana">しゅ</span><span class="romaji">shu</span></td>
+        <td><span class="hiragana">しょ</span><span class="romaji">sho</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">じ</span><span class="romaji">ji</span></td>
+        <td><span class="hiragana">じゃ</span><span class="romaji">ja</span></td>
+        <td><span class="hiragana">じゅ</span><span class="romaji">ju</span></td>
+        <td><span class="hiragana">じょ</span><span class="romaji">jo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ち</span><span class="romaji">chi</span></td>
+        <td><span class="hiragana">ちゃ</span><span class="romaji">cha</span></td>
+        <td><span class="hiragana">ちゅ</span><span class="romaji">chu</span></td>
+        <td><span class="hiragana">ちょ</span><span class="romaji">cho</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">に</span><span class="romaji">ni</span></td>
+        <td><span class="hiragana">にゃ</span><span class="romaji">nya</span></td>
+        <td><span class="hiragana">にゅ</span><span class="romaji">nyu</span></td>
+        <td><span class="hiragana">にょ</span><span class="romaji">nyo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ひ</span><span class="romaji">hi</span></td>
+        <td><span class="hiragana">ひゃ</span><span class="romaji">hya</span></td>
+        <td><span class="hiragana">ひゅ</span><span class="romaji">hyu</span></td>
+        <td><span class="hiragana">ひょ</span><span class="romaji">hyo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">び</span><span class="romaji">bi</span></td>
+        <td><span class="hiragana">びゃ</span><span class="romaji">bya</span></td>
+        <td><span class="hiragana">びゅ</span><span class="romaji">byu</span></td>
+        <td><span class="hiragana">びょ</span><span class="romaji">byo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">ぴ</span><span class="romaji">pi</span></td>
+        <td><span class="hiragana">ぴゃ</span><span class="romaji">pya</span></td>
+        <td><span class="hiragana">ぴゅ</span><span class="romaji">pyu</span></td>
+        <td><span class="hiragana">ぴょ</span><span class="romaji">pyo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">み</span><span class="romaji">mi</span></td>
+        <td><span class="hiragana">みゃ</span><span class="romaji">mya</span></td>
+        <td><span class="hiragana">みゅ</span><span class="romaji">myu</span></td>
+        <td><span class="hiragana">みょ</span><span class="romaji">myo</span></td>
+      </tr>
+      <tr>
+        <td><span class="hiragana">り</span><span class="romaji">ri</span></td>
+        <td><span class="hiragana">りゃ</span><span class="romaji">rya</span></td>
+        <td><span class="hiragana">りゅ</span><span class="romaji">ryu</span></td>
+        <td><span class="hiragana">りょ</span><span class="romaji">ryo</span></td>
+      </tr>
+    </table>
+
+    <small>* ぢ (ji) and づ (zu) are used in special cases like rendaku (連濁 - sequential voicing) when compound words are formed.</small>
+
+    <div class="footer">
+      日本語を勉強しましょう！ - Let's study Japanese!
+    </div>
+  </div>
+</body>
+</html>
